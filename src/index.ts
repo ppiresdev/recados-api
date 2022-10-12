@@ -9,4 +9,4 @@ app.use(cors());
 
 appRoutes(app);
 
-app.listen(3333, () => console.log("API is running..."));
+app.listen(process.env.PORT || 3333, () => console.log("API is running..."));
