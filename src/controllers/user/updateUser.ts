@@ -4,13 +4,13 @@ import { recoverDB, updateDB } from "../../db/persistUser";
 export class UpdateUser {
   update(request: Request, response: Response) {
     const { userId } = request.params;
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
     const userList = recoverDB();
     const userIndex = userList.findIndex((u) => u.id === userId);
     if (userIndex >= 0) {
       const user = userList[userIndex];
-      user.update(name, email, password);
+      user.update(email, password);
       updateDB(userIndex, user);
       return response.status(200).json(user);
     }

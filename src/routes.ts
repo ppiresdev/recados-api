@@ -8,20 +8,29 @@ import { CreateNewUser } from "./controllers/user/createUser";
 import { DeleteUser } from "./controllers/user/deleteUser";
 import { ListUsers } from "./controllers/user/listUsers";
 import { UpdateUser } from "./controllers/user/updateUser";
-import { ValidateEmailWasUsedMiddleware } from "./middlewares/validateEmailWasUsed";
+import { ValidateDataNoteMiddleware } from "./middlewares/note/validateDataNote";
+import { ValidateDataToCreateUserMiddleware } from "./middlewares/user/validateDataToCreateUser";
+import { ValidateEmailWasUsedMiddleware } from "./middlewares/user/validateEmailWasUsed";
 
 export default (app: Express) => {
   app.post(
     "/user",
-    // new ValidateEmailWasUsedMiddleware().ValidateEmailWasUsed,
+    new ValidateDataToCreateUserMiddleware().ValidateData,
+    new ValidateEmailWasUsedMiddleware().ValidateEmailWasUsed,
     new CreateNewUser().createNewUser
   );
   app.get("/users", new ListUsers().getAll);
-  app.put("/user/:userId", new UpdateUser().update);
-  app.delete("/user/:userId", new DeleteUser().delete);
   app.get("/user/:userId/notes", new ListNotes().getAll);
   app.get("/user/:userId/note/:noteId", new GetNote().getNote);
-  app.post("/user/:userId/notes", new CreateNote().create);
+  app.post(
+    "/user/:userId/notes",
+    new ValidateDataNoteMiddleware().ValidateData,
+    new CreateNote().create
+  );
   app.delete("/user/:userId/note/:noteId", new DeleteNote().delete);
-  app.put("/user/:userId/note/:noteId", new UpdateNote().update);
+  app.put(
+    "/user/:userId/note/:noteId",
+    new ValidateDataNoteMiddleware().ValidateData,
+    new UpdateNote().update
+  );
 };
