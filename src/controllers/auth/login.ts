@@ -5,9 +5,9 @@ import { User } from "../../models/user";
 
 export class CreateNewUser {
   createNewUser(request: Request, response: Response) {
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
-    const newUser = new User(name, email, password);
+    const newUser = new User(email, password);
     storeUser(newUser);
 
     return response.status(200).json(newUser.toString());
