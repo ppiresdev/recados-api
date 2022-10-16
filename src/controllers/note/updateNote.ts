@@ -17,15 +17,11 @@ export class UpdateNote {
         const user = userList[userIndex];
         const note = notesList[noteIndex];
 
-        if (status !== "" && content) {
-          note.update(content, status);
-        }
-
-        if (status !== "" && !content) {
+        if (status !== undefined && !content) {
           note.updateStatus(status);
         }
 
-        if (status !== "" && content) {
+        if (status === undefined && content) {
           note.updateContent(content);
         }
 
