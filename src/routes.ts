@@ -28,9 +28,5 @@ export default (app: Express) => {
     new CreateNote().create
   );
   app.delete("/user/:userId/note/:noteId", new DeleteNote().delete);
-  app.put(
-    "/user/:userId/note/:noteId",
-    new ValidateDataNoteMiddleware().ValidateData,
-    new UpdateNote().update
-  );
+  app.put("/user/:userId/note/:noteId", new UpdateNote().update);
 };
