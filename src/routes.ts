@@ -1,7 +1,6 @@
 import { Express } from "express";
 import { NoteController } from "./controllers/note.controller";
 import { UserController } from "./controllers/user.controller";
-import { LoginUser } from "./controllers/user/loginUser";
 import { ValidateDataNoteMiddleware } from "./middlewares/note/validateDataNote";
 import { ValidateDataToCreateUserMiddleware } from "./middlewares/user/validateDataToCreateUser";
 import { ValidateEmailWasUsedMiddleware } from "./middlewares/user/validateEmailWasUsed";

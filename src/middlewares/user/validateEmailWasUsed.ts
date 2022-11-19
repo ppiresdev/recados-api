@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { recoverDB } from "../../db/persistUser";
 import { User } from "../../models/user";
 import { UserRepository } from "../../repositories/user.repositoty";
 
