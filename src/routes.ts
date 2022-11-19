@@ -1,32 +1,30 @@
 import { Express } from "express";
-import { CreateNote } from "./controllers/note/createNote";
-import { DeleteNote } from "./controllers/note/deleteNote";
-import { GetNote } from "./controllers/note/getNote";
-import { ListNotes } from "./controllers/note/listNotes";
-import { UpdateNote } from "./controllers/note/updateNote";
-import { CreateNewUser } from "./controllers/user/createUser";
-import { DeleteUser } from "./controllers/user/deleteUser";
-import { ListUsers } from "./controllers/user/listUsers";
-import { UpdateUser } from "./controllers/user/updateUser";
+import { NoteController } from "./controllers/note.controller";
+import { UserController } from "./controllers/user.controller";
+import { LoginUser } from "./controllers/user/loginUser";
 import { ValidateDataNoteMiddleware } from "./middlewares/note/validateDataNote";
 import { ValidateDataToCreateUserMiddleware } from "./middlewares/user/validateDataToCreateUser";
 import { ValidateEmailWasUsedMiddleware } from "./middlewares/user/validateEmailWasUsed";
 
 export default (app: Express) => {
+  const userController = new UserController();
+  const noteController = new NoteController();
+
   app.post(
     "/user",
-    new ValidateDataToCreateUserMiddleware().ValidateData,
-    new ValidateEmailWasUsedMiddleware().ValidateEmailWasUsed,
-    new CreateNewUser().createNewUser
+    new ValidateDataToCreateUserMiddleware().validateData,
+    new ValidateEmailWasUsedMiddleware().validateEmailWasUsed,
+    userController.create
   );
-  app.get("/users", new ListUsers().getAll);
-  app.get("/user/:userId/notes", new ListNotes().getAll);
-  app.get("/user/:userId/note/:noteId", new GetNote().getNote);
+  app.post("/users/login", userController.findUserByEmailAndPassword);
+  app.get("/users", userController.getAll);
+  app.get("/user/:userId/notes", noteController.findAllNotesByUser);
   app.post(
     "/user/:userId/notes",
-    new ValidateDataNoteMiddleware().ValidateData,
-    new CreateNote().create
+    new ValidateDataNoteMiddleware().validateData,
+    noteController.saveNote
   );
-  app.delete("/user/:userId/note/:noteId", new DeleteNote().delete);
-  app.put("/user/:userId/note/:noteId", new UpdateNote().update);
+
+  app.delete("/note/:noteId", noteController.deleteNote);
+  app.put("/note/:noteId", noteController.updateNote);
 };

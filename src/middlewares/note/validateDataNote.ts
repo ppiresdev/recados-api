@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 export class ValidateDataNoteMiddleware {
-  ValidateData(request: Request, response: Response, next: NextFunction) {
+  validateData(request: Request, response: Response, next: NextFunction) {
     const { content } = request.body;
 
     if (!content) {

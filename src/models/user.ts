@@ -17,7 +17,7 @@ export class User {
     return this._password;
   }
 
-  private _notes: Note[];
+  private _notes!: Note[];
   get notes(): Note[] {
     return this._notes;
   }
@@ -26,28 +26,37 @@ export class User {
     this._id = crypto.randomUUID();
     this._email = email;
     this._password = password;
-    this._notes = [];
+    //   this._notes = [];
   }
 
-  toString() {
+  static create(id: string, email: string, password: string): User {
+    const user = new User(email, password);
+    user._id = id;
+    user._email = email;
+    user._password = password;
+
+    return user;
+  }
+
+  toJson() {
     return {
       id: this._id,
       email: this._email,
-      password: this._password,
-      notes: this._notes,
+      //password: this._password,
+      //notes: this._notes,
     };
   }
 
-  update(email: string, password: string) {
-    this._email = email;
-    this._password = password;
-  }
+  // update(email: string, password: string) {
+  //   this._email = email;
+  //   this._password = password;
+  // }
 
-  addNote(note: Note) {
-    this._notes.push(note);
-  }
+  // addNote(note: Note) {
+  //   this._notes.push(note);
+  // }
 
-  updateNotesList(noteList: Note[]) {
-    this._notes = [...noteList];
-  }
+  // updateNotesList(noteList: Note[]) {
+  //   this._notes = [...noteList];
+  // }
 }

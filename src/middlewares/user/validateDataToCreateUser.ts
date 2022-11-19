@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 export class ValidateDataToCreateUserMiddleware {
-  ValidateData(request: Request, response: Response, next: NextFunction) {
+  validateData(request: Request, response: Response, next: NextFunction) {
     const { email, password } = request.body;
 
     if (!email || !password) {

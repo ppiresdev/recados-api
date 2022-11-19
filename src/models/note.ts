@@ -32,4 +32,19 @@ export class Note {
   updateContent(content: string) {
     this._content = content;
   }
+
+  static create(id: string, content: string, status: boolean): Note {
+    const model = new Note(content);
+    model._status = status;
+    model._id = id;
+    return model;
+  }
+
+  toJson() {
+    return {
+      id: this._id,
+      content: this._content,
+      status: this._status,
+    };
+  }
 }
